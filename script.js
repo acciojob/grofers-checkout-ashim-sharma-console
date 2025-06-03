@@ -1,31 +1,31 @@
 function calculateTotal() {
-    const table = document.getElementById('groceryTable');
-    const priceCells = table.querySelectorAll('tbody tr.item td.prices');
+  // Get the table element
+  const table = document.getElementById('groceryTable');
 
-    // Remove existing total row if present
-    const oldTotalRow = table.querySelector('tbody tr.total-row');
-    if (oldTotalRow) {
-      oldTotalRow.remove();
-    }
+  // Select all price cells in rows with class "item"
+  const priceCells = table.querySelectorAll('tbody tr.item td.prices');
 
-    let total = 0;
-    priceCells.forEach(cell => {
-      const price = parseFloat(cell.textContent);
-      if (!isNaN(price)) {
-        total += price;
-      }
-    });
+  // Remove existing total row if exists
+  const oldTotalRow = table.querySelector('tbody tr.total-row');
+  if (oldTotalRow) oldTotalRow.remove();
 
-    // Create new total row
-    const totalRow = document.createElement('tr');
-    totalRow.classList.add('total-row');
+  let total = 0;
+  priceCells.forEach(cell => {
+    const price = parseFloat(cell.textContent);
+    if (!isNaN(price)) total += price;
+  });
 
-    const totalCell = document.createElement('td');
-    totalCell.setAttribute('colspan', 2);
-    totalCell.textContent = 'Total: $' + total.toFixed(2);
+  // Create a new row and cell for total
+  const totalRow = document.createElement('tr');
+  totalRow.classList.add('total-row');
 
-    totalRow.appendChild(totalCell);
-    table.querySelector('tbody').appendChild(totalRow);
-  }
+  const totalCell = document.createElement('td');
+  totalCell.setAttribute('colspan', 2);
+  totalCell.textContent = 'Total: $' + total.toFixed(2);
 
-  document.getElementById('calculateBtn').addEventListener('click', calculateTotal);
+  totalRow.appendChild(totalCell);
+  // Append to tbody
+  table.querySelector('tbody').appendChild(totalRow);
+}
+document.getElementById('calculateBtn').addEventListener('click', calculateTotal);
+
