@@ -1,2 +1,5 @@
 
 /* Your CSS Code here. */
+table { border-collapse: collapse; width: 300px; margin: 20px auto; }
+    th, td { border: 1px solid #333; padding: 8px; text-align: center; }
+    .total-row { font-weight: bold; background-color: #f0f0f0; }
