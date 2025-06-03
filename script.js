@@ -1,31 +1,33 @@
-function calculateTotal() {
-  // Get the table element
-  const table = document.getElementById('groceryTable');
+ function updateTotal() {
+    const priceElements = document.querySelectorAll('.prices');
+    let total = 0;
 
-  // Select all price cells in rows with class "item"
-  const priceCells = table.querySelectorAll('tbody tr.item td.prices');
+    // Calculate the sum of prices
+    priceElements.forEach(function (el) {
+      const value = parseFloat(el.textContent.trim());
+      if (!isNaN(value)) {
+        total += value;
+      }
+    });
 
-  // Remove existing total row if exists
-  const oldTotalRow = table.querySelector('tbody tr.total-row');
-  if (oldTotalRow) oldTotalRow.remove();
+    // Remove previous total row if exists
+    const existingTotalRow = document.getElementById('total-row');
+    if (existingTotalRow) {
+      existingTotalRow.remove();
+    }
 
-  let total = 0;
-  priceCells.forEach(cell => {
-    const price = parseFloat(cell.textContent);
-    if (!isNaN(price)) total += price;
-  });
+    // Create a new row for total
+    const totalRow = document.createElement('tr');
+    totalRow.id = 'total-row';
 
-  // Create a new row and cell for total
-  const totalRow = document.createElement('tr');
-  totalRow.classList.add('total-row');
+    const totalCell = document.createElement('td');
+    const columnCount = document.querySelector('.item').children.length;
 
-  const totalCell = document.createElement('td');
-  totalCell.setAttribute('colspan', 2);
-  totalCell.textContent = 'Total: $' + total.toFixed(2);
+    totalCell.setAttribute('colspan', columnCount);
+    totalCell.textContent = 'Total Price: ₹' + total.toFixed(2);
+    totalCell.style.fontWeight = 'bold';
+    totalCell.style.textAlign = 'right';
 
-  totalRow.appendChild(totalCell);
-  // Append to tbody
-  table.querySelector('tbody').appendChild(totalRow);
-}
-document.getElementById('calculateBtn').addEventListener('click', calculateTotal);
-
+    totalRow.appendChild(totalCell);
+    document.getElementById('grocery-table').appendChild(totalRow);
+  }
